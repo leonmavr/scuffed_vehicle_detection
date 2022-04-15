@@ -28,7 +28,7 @@ for f in `find . -name *png`; do
     i=$[$i+1]
 done
 rm -rf Far Left MiddleClose Right
-cd ../..
+cd -
 
 ### Generate ground truth for each image
 echo "[*] Generating ground truth for the dataset"
@@ -37,6 +37,13 @@ echo "[*] Generating ground truth for the dataset"
 ### Train and export classifier as a pickle file
 echo "[*] Training and exporting binary classifier"
 ./train.py
-
-# Done. Now a *.pkl file should have been created at this directory.
+# Now a *.pkl file should have been created at this directory.
 # To use it, load it with pickle and call its predict method on your input vector.
+
+### Join together the pre-trained model(s) (since github doesn't allow uploading files larger than 25M) 
+echo "[*] Joining together pre-trained classifier file"
+cd models/split_files
+cat car_classifier_64x64.aa car_classifier_64x64.ab car_classifier_64x64.ac car_classifier_64x64.ad > ../car_classifier_64x64.pkl
+cd ..
+rm -rf split_files
+cd ..

@@ -15,8 +15,9 @@ from sklearn.metrics import classification_report
 y_true = []
 y_pred = []
 
+clf_path = os.path.join(this_script_folder, 'models', 'car_classifier_64x64.pkl')
 # binary classifier
-with open('training_data/car_classifier.pkl', 'rb') as f:
+with open(clf_path, 'rb') as f:
     clf = pkl.load(f)
 
 # positive labels
@@ -37,9 +38,9 @@ f1Score = f1_score(y_true, y_pred, average=None)
 accuracy = accuracy_score(y_true, y_pred)
 precision = recall_score(y_true, y_pred)
 recall = precision_score(y_true, y_pred)
-print('='*30)
-print('accuracy:', accuracy)
-print('recall:', recall)
-print('precision:', precision)
-print('f1:', f1Score)
-print('='*30)
+print('='*50)
+print('accuracy:\t\t', accuracy)
+print('recall:\t\t', recall)
+print('precision:\t\t', precision)
+print('f1:\t\t', f1Score)
+print('='*50)
