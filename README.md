@@ -1,6 +1,12 @@
 # scuffed_vehicle_detection
 Vehicle detection with HOG from scratch, a SVM and heat maps
 
+## Requirements
+You can install the dependencies by:
+```
+pip install -r requirements.txt
+```
+
 ## About
 This repository contains a HOG implementation from scratch, trained with the
 GTI training set (https://www.gti.ssr.upm.es/~jal/download.html) for vehicle detection.
