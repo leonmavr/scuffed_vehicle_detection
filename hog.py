@@ -12,6 +12,7 @@ def update_histogram(grad_magn: float,
     by spreading the gradient magnitude `grad_magn` (vote) across the `votes`
     vector according to the 2 nearest bins of the angle `grad_angle` on the
     `angle_bins` vector. A basic doctest is defined below.
+    
     Parameters
     ----------
     grad_magn : float
@@ -59,15 +60,17 @@ def update_histogram(grad_magn: float,
     return votes
 
 
-def hog(impath: str, rows = 128, cols = 64, stride = 8):
+def hog(im: Union[str, np.ndarray], rows = 128, cols = 64, stride = 8):
     """hog. Computes the histogram of gradient of an image as a vector.
     This vector can later be combined with Support Vector Machines to
     create an object detection pipeline. Implementation reference:
     https://www.youtube.com/watch?v=0Zib1YEE4LU
     Parameters
     ----------
-    impath : str
-        File path to image to read from
+    im : Union[str, np.ndarray]
+        Image to read:
+            * If type is string (str), then open the suggested filepath
+            * If time is a numpy array, apply HOG on the array
     rows :
         Number of rows of the resized image containing the object of interest
     cols :
@@ -77,7 +80,9 @@ def hog(impath: str, rows = 128, cols = 64, stride = 8):
         is computed
     """
     ### Step 1 - resize image
-    im = cv2.cvtColor(cv2.imread(impath), cv2.COLOR_BGR2GRAY)
+    if isinstance(im, str):
+        im = cv2.imread(im, cv2.IMREAD_COLOR)
+        im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
     im = cv2.resize(im, (cols, rows))
     ### Step 2 - compute gradient magnitude and angle
     gradx = cv2.Sobel(np.array(im, np.float32)/255, cv2.CV_32F, dx = 1, dy = 0, ksize = 1)
