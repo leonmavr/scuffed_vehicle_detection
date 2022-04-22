@@ -2,6 +2,7 @@
 
 from sklearn import svm
 import pickle as pkl
+import glob
 import os
 this_script_path = os.path.abspath(__file__)
 this_script_folder = os.path.dirname(this_script_path)
@@ -10,17 +11,19 @@ X = []
 Y = []
 
 training_path = os.path.join(this_script_folder, 'training_data')
+
 # positive labels
-for f in os.listdir(os.path.join(training_path, 'vehicles')):
+positive_features = glob.glob(os.path.join(training_path, 'vehicles', '*.pkl'))
+for f in positive_features:
     f_abs_path = os.path.join(training_path, 'vehicles', f)
-    print(f_abs_path)
     with open(f_abs_path, 'rb') as f:
         xi = pkl.load(f)
     X.append(xi)
     Y.append(1)
 
 # negative labels
-for f in os.listdir(os.path.join(training_path, 'non-vehicles')):
+negative_features = glob.glob(os.path.join(training_path, 'non-vehicles', '*.pkl'))
+for f in negative_features:
     f_abs_path = os.path.join(training_path, 'non-vehicles', f)
     with open(f_abs_path, 'rb') as f:
         xi = pkl.load(f)
